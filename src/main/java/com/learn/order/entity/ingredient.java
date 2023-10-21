@@ -54,4 +54,13 @@ public class Ingredient {
     )
     private Double sodium;
 
+    public Ingredient(String name, Integer energy, Double protein, Double fat, Double carbs, Double sodium) {
+        this.name = name;
+        this.energy = energy;
+        this.protein = protein;
+        this.fat = fat;
+        this.carbs = carbs;
+        this.sodium = sodium;
+    }
+
 }
