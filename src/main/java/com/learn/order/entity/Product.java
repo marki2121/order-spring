@@ -1,10 +1,15 @@
 package com.learn.order.entity;
 
+import java.util.List;
+
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinTable;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToMany;
 import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -12,15 +17,15 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 @Entity
-@Table(name = "ingredient")
+@Table(name = "product")
 @AllArgsConstructor
 @NoArgsConstructor
 @Getter
 @Setter
-public class Ingredient {
+public class Product {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id")
+    @Column(name= "id")
     private Long id;
     @Column(
         name = "name",
@@ -29,29 +34,15 @@ public class Ingredient {
     )
     private String name;
     @Column(
-        name = "energy",
+        name = "price",
         nullable = false
     )
-    private Integer energy;
-    @Column(
-        name = "protein",
-        nullable = false
+    private Double price;
+    @ManyToMany
+    @JoinTable(
+        name = "product_ingredient", 
+        joinColumns = @JoinColumn(name = "productId"), 
+        inverseJoinColumns = @JoinColumn(name = "ingredientId")
     )
-    private Double protein;
-    @Column(
-        name = "fat",
-        nullable = false
-    )
-    private Double fat;
-    @Column(
-        name = "carbs",
-        nullable = false
-    )
-    private Double carbs;
-    @Column(
-        name = "sodium",
-        nullable = false
-    )
-    private Double sodium;
-
+    private List<Ingredient> ingredients;
 }
