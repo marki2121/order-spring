@@ -1,5 +1,6 @@
 package com.learn.order.controller;
 
+import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.anyLong;
 import static org.mockito.Mockito.when;
 
@@ -11,14 +12,20 @@ import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.test.web.servlet.MockMvc;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.delete;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.put;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
-import java.util.List;
-
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
 
+import org.springframework.http.MediaType;
+
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.learn.order.dto.request.IngredientDTO;
 import com.learn.order.dto.request.mappers.IngredientMapper;
+import com.learn.order.entity.Ingredient;
 import com.learn.order.service.IngredientService;
 import com.learn.order.service.IngredientServiceGet;
 import com.learn.order.support.entity.IngredientSupp;
@@ -55,6 +62,108 @@ public class IngredientControllerTest {
             .andExpect(content().string("Deleted."));
     }
 
-    
-    
+
+    @Test
+    public void postTestSuccess() throws JsonProcessingException, Exception {
+        IngredientDTO dto = IngredientSupp.getIngredientDTO();
+        ObjectMapper om = new ObjectMapper();
+
+        when(ingredientService.addNewIngredient(any(Ingredient.class))).thenReturn("Saved.");
+
+        mockMvc.perform(post("/ingredient")
+            .contentType(MediaType.APPLICATION_JSON)
+            .content(om.writeValueAsString(dto)))
+            .andExpect(status().isOk());
+    }
+
+    @Test
+    public void postTestFailNoName() throws JsonProcessingException, Exception {
+        IngredientDTO dto = IngredientSupp.getIngredientDTO();
+        ObjectMapper om = new ObjectMapper();
+
+        dto.setName("");
+
+        mockMvc.perform(post("/ingredient")
+            .contentType(MediaType.APPLICATION_JSON)
+            .content(om.writeValueAsString(dto)))
+            .andExpect(status().isBadRequest());
+    }
+
+    @Test
+    public void postTestFailBadEnergy() throws JsonProcessingException, Exception {
+        IngredientDTO dto = IngredientSupp.getIngredientDTO();
+        ObjectMapper om = new ObjectMapper();
+
+        dto.setEnergy(-1);
+
+        mockMvc.perform(post("/ingredient")
+            .contentType(MediaType.APPLICATION_JSON)
+            .content(om.writeValueAsString(dto)))
+            .andExpect(status().isBadRequest());
+    }
+
+    @Test
+    public void postTestFailBadProtein() throws JsonProcessingException, Exception {
+        IngredientDTO dto = IngredientSupp.getIngredientDTO();
+        ObjectMapper om = new ObjectMapper();
+
+        dto.setProtein(-1.0);
+
+        mockMvc.perform(post("/ingredient")
+            .contentType(MediaType.APPLICATION_JSON)
+            .content(om.writeValueAsString(dto)))
+            .andExpect(status().isBadRequest());
+    }
+
+    @Test
+    public void postTestFailBadSodium() throws JsonProcessingException, Exception {
+        IngredientDTO dto = IngredientSupp.getIngredientDTO();
+        ObjectMapper om = new ObjectMapper();
+
+        dto.setSodium(-1.0);
+
+        mockMvc.perform(post("/ingredient")
+            .contentType(MediaType.APPLICATION_JSON)
+            .content(om.writeValueAsString(dto)))
+            .andExpect(status().isBadRequest());
+    }
+
+    @Test
+    public void postTestFailBadFat() throws JsonProcessingException, Exception {
+        IngredientDTO dto = IngredientSupp.getIngredientDTO();
+        ObjectMapper om = new ObjectMapper();
+
+        dto.setFat(-1.0);
+
+        mockMvc.perform(post("/ingredient")
+            .contentType(MediaType.APPLICATION_JSON)
+            .content(om.writeValueAsString(dto)))
+            .andExpect(status().isBadRequest());
+    }
+
+    @Test
+    public void postTestFailBadCarbs() throws JsonProcessingException, Exception {
+        IngredientDTO dto = IngredientSupp.getIngredientDTO();
+        ObjectMapper om = new ObjectMapper();
+
+        dto.setCarbs(-1.0);
+
+        mockMvc.perform(post("/ingredient")
+            .contentType(MediaType.APPLICATION_JSON)
+            .content(om.writeValueAsString(dto)))
+            .andExpect(status().isBadRequest());
+    }
+
+    @Test
+    public void putTestSuccess() throws JsonProcessingException, Exception {
+        ObjectMapper om = new ObjectMapper();
+        IngredientDTO dto = IngredientSupp.getIngredientDTO();
+
+        when(ingredientService.updateById(anyLong(), any(IngredientDTO.class))).thenReturn("Updated.");
+
+        mockMvc.perform(put("/ingredient/1")
+            .contentType(MediaType.APPLICATION_JSON)
+            .content(om.writeValueAsString(dto)))
+            .andExpect(status().isOk());
+    }
 }

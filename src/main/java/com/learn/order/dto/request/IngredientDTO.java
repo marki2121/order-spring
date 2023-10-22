@@ -1,7 +1,7 @@
 package com.learn.order.dto.request;
 
+import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotEmpty;
-import jakarta.validation.constraints.Positive;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -14,19 +14,19 @@ import lombok.Setter;
 public class IngredientDTO {
     @NotEmpty(message = "Missing name")
     private String name;
-    @NotEmpty(message = "Missing energy")
-    @Positive(message = "Energy can not be negative")
+    @jakarta.validation.constraints.NotNull(message = "Missing energy")
+    @Min(value = 0L, message = "Energy can not be negative")
     private Integer energy;
-    @NotEmpty(message = "Missing protein")
-    @Positive(message = "Protein can not be negative")
+    @jakarta.validation.constraints.NotNull(message = "Missing protein")
+    @Min(value = 0L, message = "Protein can not be negative")
     private Double protein;
-    @NotEmpty(message = "Missing fat")
-    @Positive(message = "Fat can not be negative")
+    @jakarta.validation.constraints.NotNull(message = "Missing fat")
+    @Min(value = 0L, message = "Fat can not be negative")
     private Double fat;
-    @NotEmpty(message = "Missing name")
-    @Positive(message = "Carbs can not be negative")
+    @jakarta.validation.constraints.NotNull(message = "Missing name")
+    @Min(value = 0L, message = "Carbs can not be negative")
     private Double carbs;
-    @NotEmpty(message = "Missing carbs")
-    @Positive(message = "Sodium can not be negative")
+    @jakarta.validation.constraints.NotNull(message = "Missing carbs")
+    @Min(value = 0L, message = "Sodium can not be negative")
     private Double sodium;
 }
