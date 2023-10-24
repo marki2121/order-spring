@@ -30,9 +30,16 @@ public class ProduceSupp {
 
     public static ProductDTO getProductDTO() {
         return new ProductDTO(
-            "DTO", 
+            "proizvod", 
             0.1, 
             List.of(1L, 2L));
+    }
+
+    public static ProductDTO getProductDTOMirror() {
+        return new ProductDTO(
+            "DTO", 
+            0.1, 
+            List.of(1L, 1L));
     }
 
     public static List<Product> getProductAll() {
