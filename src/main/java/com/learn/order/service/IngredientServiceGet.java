@@ -7,5 +7,7 @@ import com.learn.order.entity.Ingredient;
 public interface IngredientServiceGet {
 
     List<Ingredient> getAll();
+
+    List<Ingredient> getFromList(List<Long> ingredients);
     
 }

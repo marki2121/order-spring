@@ -45,4 +45,15 @@ public class Product {
         inverseJoinColumns = @JoinColumn(name = "ingredientId")
     )
     private List<Ingredient> ingredients;
+
+    public Product(String name, Double price) {
+        this.name = name;
+        this.price = price;
+    }
+
+    public Product(String name, Double price, List<Ingredient> ingredients) {
+        this.name = name;
+        this.price = price;
+        this.ingredients = ingredients;
+    }
 }

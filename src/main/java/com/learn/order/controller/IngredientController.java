@@ -25,9 +25,9 @@ import jakarta.validation.Valid;
 @RequestMapping(path= "/ingredient")
 public class IngredientController {
     
-    private IngredientService ingredientService;
-    private IngredientServiceGet ingredientServiceGet;
-    private IngredientMapper ingredientMapper;
+    private final IngredientService ingredientService;
+    private final IngredientServiceGet ingredientServiceGet;
+    private final IngredientMapper ingredientMapper;
 
     public IngredientController(IngredientService ingredientService, IngredientServiceGet ingredientServiceGet,
             IngredientMapper ingredientMapper) {
