@@ -10,7 +10,6 @@ import com.learn.order.service.ProductService;
 import com.learn.order.service.ProductServiceGet;
 
 import jakarta.validation.Valid;
-import jakarta.websocket.server.PathParam;
 
 import java.util.List;
 
@@ -42,7 +41,6 @@ public class ProductController {
         return ResponseEntity.ok(productServiceGet.getAll());
     }
 
-    //Map dto and validate
     @PostMapping
     public ResponseEntity<String> saveNew(@Valid @RequestBody ProductDTO data) {
         Product product = productMapper.apply(data);
