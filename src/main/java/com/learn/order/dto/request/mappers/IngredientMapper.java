@@ -25,7 +25,7 @@ public class IngredientMapper implements Function<IngredientDTO, Ingredient>{
     }
 
     public List<Ingredient> mapToList(List<IngredientDTO> data) {
-        List<Ingredient> list = new ArrayList();
+        List<Ingredient> list = new ArrayList<Ingredient>();
 
         for(IngredientDTO d: data) {
             list.add(apply(d));

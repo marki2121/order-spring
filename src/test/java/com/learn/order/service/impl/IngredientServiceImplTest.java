@@ -59,7 +59,6 @@ public class IngredientServiceImplTest {
 
     @Test
     void testUpdateByIdAndFail() throws Exception {
-        Ingredient ingredientDb = IngredientSupp.getIngredient1();
         IngredientDTO ingredientDTO = IngredientSupp.getIngredientDTO();
 
         when(ingredientRepository.findById(anyLong())).thenThrow(RuntimeException.class);
