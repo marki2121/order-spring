@@ -20,16 +20,40 @@ import lombok.Setter;
 public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(
+        name = "id"
+    )
     private Long id;
     @Column(
+        name = "username",
         nullable = false,
         length = 25
     )
     private String username;
-    @Column(nullable = false)
+    @Column(
+        name = "password",
+        nullable = false
+    )
     private String password;
-    @Column(nullable = false)
+    @Column(
+        name = "enabled",
+        nullable = false
+    )
     private Boolean enabled = true;
-    @Column(nullable = false)
+    @Column(
+        name = "active",
+        nullable = false
+    )
     private Boolean active = true;
+    @Column(
+        name = "isPrivate",
+        nullable = false
+    )
+    private Boolean isPrivate = false;
+
+    public User(String username, String password) {
+        this.username = username;
+        this.password = password;
+    }
+
 }

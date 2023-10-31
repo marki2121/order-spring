@@ -39,7 +39,7 @@ public class ProductServiceImpl implements ProductService{
     @Override
     public String updateById(Long id, ProductDTO data) {
         Boolean changed = false;
-        Product productDb = productRepository.findById(id).orElseThrow();
+        Product productDb = productRepository.findById(id).orElseThrow(RuntimeException::new);
         List<Ingredient> ingredients = ingredientService.getFromList(data.getIngredients());
 
         if(productDb.getName() != data.getName() && !data.getName().isEmpty()) {

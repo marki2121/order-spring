@@ -45,11 +45,14 @@ public class IngredientControllerTest {
 
     @Test
     public void getTest() throws Exception {
+        ObjectMapper om = new ObjectMapper();
+
         when(ingredientServiceGet.getAll()).thenReturn(IngredientSupp.getAll());
 
         mockMvc.perform(get("/ingredient"))
-            .andDo(print())
-            .andExpect(status().isOk());
+            .andExpect(status().isOk())
+            .andExpect(content().json(om.writeValueAsString(IngredientSupp.getAll())));
+
     }
 
     @Test
