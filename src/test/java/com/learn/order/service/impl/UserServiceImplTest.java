@@ -2,12 +2,14 @@
 package com.learn.order.service.impl;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.anyLong;
 import static org.mockito.Mockito.doNothing;
 import static org.mockito.Mockito.when;
 
 import com.learn.order.entity.User;
+import com.learn.order.errors.ErrorResponse;
 import com.learn.order.repository.UserRepository;
 import com.learn.order.service.UserService;
 import com.learn.order.support.entity.UserSupp;
@@ -36,5 +38,13 @@ public class UserServiceImplTest {
     when(userRepository.save(any(User.class))).thenReturn(UserSupp.getUser2());
 
     assertEquals("Updated.", userService.updatebyId(1L, UserSupp.getUserDTO()));
+  }
+
+  @Test
+  void testUpdatebyIdAndThrow() {
+    when(userRepository.findById(anyLong())).thenThrow(new ErrorResponse());
+    when(userRepository.save(any(User.class))).thenReturn(UserSupp.getUser2());
+
+    assertThrows(ErrorResponse.class, () -> userService.updatebyId(1L, UserSupp.getUserDTO()));
   }
 }

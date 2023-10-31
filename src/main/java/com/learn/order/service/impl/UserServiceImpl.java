@@ -3,9 +3,11 @@ package com.learn.order.service.impl;
 
 import com.learn.order.dto.request.UserDTO;
 import com.learn.order.entity.User;
+import com.learn.order.errors.ErrorResponse;
 import com.learn.order.repository.UserRepository;
 import com.learn.order.service.UserService;
 import jakarta.validation.Valid;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -26,7 +28,13 @@ public class UserServiceImpl implements UserService {
 
   @Override
   public String updatebyId(Long id, @Valid UserDTO data) {
-    User userDb = userRepository.findById(id).orElseThrow(RuntimeException::new);
+    User userDb =
+        userRepository
+            .findById(id)
+            .orElseThrow(
+                () ->
+                    new ErrorResponse(
+                        HttpStatus.NOT_FOUND, "User with id: " + id.toString() + " not found."));
 
     if (userDb.getUsername() != data.getUsername() && !data.getUsername().isEmpty()) {
       userDb.setUsername(data.getUsername());

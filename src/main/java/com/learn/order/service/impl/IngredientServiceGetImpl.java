@@ -2,11 +2,12 @@
 package com.learn.order.service.impl;
 
 import com.learn.order.entity.Ingredient;
+import com.learn.order.errors.ErrorResponse;
 import com.learn.order.repository.IngredientRepository;
 import com.learn.order.service.IngredientServiceGet;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -28,11 +29,10 @@ public class IngredientServiceGetImpl implements IngredientServiceGet {
     List<Ingredient> list = new ArrayList<Ingredient>();
 
     for (Long i : ingredients) {
-      Optional<Ingredient> ingredient = ingredientRepository.findById(i);
-
-      if (ingredient.isPresent()) {
-        list.add(ingredient.get());
-      }
+      list.add(
+          ingredientRepository
+              .findById(i)
+              .orElseThrow(() -> new ErrorResponse(HttpStatus.NOT_FOUND, "Ingredient not found")));
     }
 
     return list;
