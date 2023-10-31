@@ -4,10 +4,12 @@ package com.learn.order.service.impl;
 import com.learn.order.dto.request.ProductDTO;
 import com.learn.order.entity.Ingredient;
 import com.learn.order.entity.Product;
+import com.learn.order.errors.ErrorResponse;
 import com.learn.order.repository.ProductRepository;
 import com.learn.order.service.IngredientServiceGet;
 import com.learn.order.service.ProductService;
 import java.util.List;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -39,7 +41,14 @@ public class ProductServiceImpl implements ProductService {
   @Override
   public String updateById(Long id, ProductDTO data) {
     Boolean changed = false;
-    Product productDb = productRepository.findById(id).orElseThrow(RuntimeException::new);
+
+    Product productDb =
+        productRepository
+            .findById(id)
+            .orElseThrow(
+                () ->
+                    new ErrorResponse(
+                        HttpStatus.NOT_FOUND, "Product with id: " + id.toString() + " not found."));
     List<Ingredient> ingredients = ingredientService.getFromList(data.getIngredients());
 
     if (productDb.getName() != data.getName() && !data.getName().isEmpty()) {

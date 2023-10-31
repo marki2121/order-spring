@@ -10,6 +10,7 @@ import static org.mockito.Mockito.when;
 
 import com.learn.order.dto.request.IngredientDTO;
 import com.learn.order.entity.Ingredient;
+import com.learn.order.errors.ErrorResponse;
 import com.learn.order.repository.IngredientRepository;
 import com.learn.order.support.entity.IngredientSupp;
 import java.util.Optional;
@@ -17,6 +18,7 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
+import org.springframework.http.HttpStatus;
 
 @SpringBootTest
 public class IngredientServiceImplTest {
@@ -37,9 +39,7 @@ public class IngredientServiceImplTest {
   void testDeleteById() {
     doNothing().when(ingredientRepository).deleteById(anyLong());
 
-    String test = ingredientService.deleteById(1L);
-
-    assertEquals(test, "Deleted.");
+    assertEquals(ingredientService.deleteById(1L), "Deleted.");
   }
 
   @Test
@@ -49,17 +49,16 @@ public class IngredientServiceImplTest {
 
     when(ingredientRepository.findById(anyLong())).thenReturn(Optional.of(ingredientDb));
 
-    String test = ingredientService.updateById(1L, ingredientDTO);
-
-    assertEquals(test, "Updated.");
+    assertEquals(ingredientService.updateById(1L, ingredientDTO), "Updated.");
   }
 
   @Test
-  void testUpdateByIdAndFail() throws Exception {
+  void testUpdateByIdAndThrow() throws Exception {
     IngredientDTO ingredientDTO = IngredientSupp.getIngredientDTO();
 
-    when(ingredientRepository.findById(anyLong())).thenThrow(RuntimeException.class);
+    when(ingredientRepository.findById(anyLong()))
+        .thenThrow(new ErrorResponse(HttpStatus.NOT_FOUND, "Ingredient not found."));
 
-    assertThrows(RuntimeException.class, () -> ingredientService.updateById(1L, ingredientDTO));
+    assertThrows(ErrorResponse.class, () -> ingredientService.updateById(1L, ingredientDTO));
   }
 }

@@ -3,8 +3,10 @@ package com.learn.order.service.impl;
 
 import com.learn.order.dto.request.IngredientDTO;
 import com.learn.order.entity.Ingredient;
+import com.learn.order.errors.ErrorResponse;
 import com.learn.order.repository.IngredientRepository;
 import com.learn.order.service.IngredientService;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -32,7 +34,10 @@ public class IngredientServiceImpl implements IngredientService {
 
   @Override
   public String updateById(Long id, IngredientDTO data) {
-    Ingredient ingredientDb = ingredientRepository.findById(id).orElseThrow(RuntimeException::new);
+    Ingredient ingredientDb =
+        ingredientRepository
+            .findById(id)
+            .orElseThrow(() -> new ErrorResponse(HttpStatus.NOT_FOUND, "Ingredient not found."));
 
     if (!ingredientDb.getName().equals(data.getName()) && !data.getName().isBlank()) {
       ingredientDb.setName(data.getName());

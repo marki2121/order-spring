@@ -2,6 +2,7 @@
 package com.learn.order.controller;
 
 import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.ArgumentMatchers.anyList;
 import static org.mockito.ArgumentMatchers.anyLong;
 import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.delete;
@@ -14,8 +15,11 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.learn.order.dto.request.ProductDTO;
+import com.learn.order.entity.Product;
+import com.learn.order.service.IngredientServiceGet;
 import com.learn.order.service.ProductService;
 import com.learn.order.service.ProductServiceGet;
+import com.learn.order.support.entity.IngredientSupp;
 import com.learn.order.support.entity.ProduceSupp;
 import java.util.List;
 import org.junit.jupiter.api.Test;
@@ -32,6 +36,7 @@ public class ProductControllerTest {
 
   @MockBean private ProductService productService;
   @MockBean private ProductServiceGet privatServiceGet;
+  @MockBean private IngredientServiceGet ingredientServiceGet;
 
   @Autowired private MockMvc mockMvc;
 
@@ -57,6 +62,9 @@ public class ProductControllerTest {
   @Test
   void testSaveNew() throws JsonProcessingException, Exception {
     ObjectMapper om = new ObjectMapper();
+
+    when(productService.saveNew(any(Product.class))).thenReturn("Saved.");
+    when(ingredientServiceGet.getFromList(anyList())).thenReturn(IngredientSupp.getAll());
 
     mockMvc
         .perform(
