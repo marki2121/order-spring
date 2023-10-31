@@ -2,6 +2,7 @@ plugins {
 	id 'java'
 	id 'org.springframework.boot' version '3.1.5'
 	id 'io.spring.dependency-management' version '1.1.3'
+	id 'com.diffplug.spotless' version '6.22.0'
 }
 
 group = 'com.learn'
@@ -37,4 +38,29 @@ dependencies {
 
 tasks.named('test') {
 	useJUnitPlatform()
+}
+
+apply plugin: 'groovy'
+spotless {
+	java {
+		importOrder()
+		removeUnusedImports()
+
+		cleanthat()
+
+		googleJavaFormat()
+
+		formatAnnotations()
+
+		licenseHeader '/* (C) $YEAR */'
+	}
+	groovy {
+		importOrder()
+		greclipse()
+		licenseHeader '/* (C) $YEAR */'
+	}
+	groovyGradle {
+		target '*.gradle'
+		greclipse()
+	}
 }

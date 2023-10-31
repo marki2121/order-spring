@@ -1,13 +1,12 @@
+/* (C) 2023 */
 package com.learn.order.service;
 
-import java.util.List;
-
 import com.learn.order.entity.Ingredient;
+import java.util.List;
 
 public interface IngredientServiceGet {
 
-    List<Ingredient> getAll();
+  List<Ingredient> getAll();
 
-    List<Ingredient> getFromList(List<Long> ingredients);
-    
+  List<Ingredient> getFromList(List<Long> ingredients);
 }

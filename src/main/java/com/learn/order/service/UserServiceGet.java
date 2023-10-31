@@ -1,11 +1,10 @@
+/* (C) 2023 */
 package com.learn.order.service;
 
-import java.util.List;
-
 import com.learn.order.entity.User;
+import java.util.List;
 
 public interface UserServiceGet {
 
-    List<User> getAll();
-    
+  List<User> getAll();
 }
