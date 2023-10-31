@@ -14,6 +14,7 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.delete;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.put;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 import java.util.List;
@@ -49,10 +50,13 @@ public class ProductControllerTest {
 
     @Test
     void testGetAll() throws Exception {
+        ObjectMapper om = new ObjectMapper();
+
         when(privatServiceGet.getAll()).thenReturn(ProduceSupp.getProductAll());
 
         mockMvc.perform(get("/product"))
-            .andExpect(status().isOk());
+            .andExpect(status().isOk())
+            .andExpect(content().json(om.writeValueAsString(ProduceSupp.getProductAll())));
     }
 
     @Test
