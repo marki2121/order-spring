@@ -6,6 +6,8 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -38,6 +40,10 @@ public class User {
 
   @Column(name = "isPrivate", nullable = false)
   private Boolean isPrivate = false;
+
+  @ManyToOne
+  @JoinColumn(referencedColumnName = "id", name = "role")
+  private Role role;
 
   public User(String username, String password) {
     this.username = username;
