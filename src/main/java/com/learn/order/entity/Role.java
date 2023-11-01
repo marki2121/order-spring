@@ -1,3 +1,4 @@
+/* (C) 2023 */
 package com.learn.order.entity;
 
 import jakarta.persistence.Column;
@@ -18,10 +19,11 @@ import lombok.Setter;
 @Getter
 @Setter
 public class Role {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id")
-    private Long id;
-    @Column(name = "name")
-    private String name;
+  @Id
+  @GeneratedValue(strategy = GenerationType.IDENTITY)
+  @Column(name = "id")
+  private Long id;
+
+  @Column(name = "name")
+  private String name;
 }

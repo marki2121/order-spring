@@ -42,7 +42,7 @@ public class User {
   private Boolean isPrivate = false;
 
   @ManyToOne
-  @JoinColumn(referencedColumnName= "id", name= "role")
+  @JoinColumn(referencedColumnName = "id", name = "role")
   private Role role;
 
   public User(String username, String password) {
