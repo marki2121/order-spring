@@ -1,3 +1,4 @@
+/* (C) 2023 */
 package com.learn.order.dto.response;
 
 import lombok.AllArgsConstructor;
@@ -10,5 +11,5 @@ import lombok.Setter;
 @NoArgsConstructor
 @AllArgsConstructor
 public class JwtAuthenticationResponse {
-    private String token;
+  private String token;
 }
