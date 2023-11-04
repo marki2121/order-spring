@@ -10,3 +10,6 @@ spring:
     driver-class-name: com.mysql.cj.jdbc.Driver
   liquibase:
     change-log: classpath:db/changelog/changelog-master.xml
+token:
+  signing:
+    key: "bigsecretneedtoputinenvforprod"
